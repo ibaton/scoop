@@ -8,3 +8,4 @@ pluginManagement {
 rootProject.name = "scoop"
 include(":app")
 include(":newsapi")
+include(":newsrepository")
