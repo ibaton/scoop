@@ -18,7 +18,7 @@ val json = Json {
 /**
  * Class handling the connection to news api.
  */
-@ExperimentalSerializationApi
+@OptIn(ExperimentalSerializationApi::class)
 fun createNewsApiService(): NewsApiService{
     val contentType = MediaType.get("*/*")
 

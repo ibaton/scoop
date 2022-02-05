@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.5.31"
+    kotlin("plugin.serialization") version "1.6.10"
 }
 
 android {
@@ -32,11 +32,17 @@ android {
         }
 }
 
+kotlin.sourceSets.all {
+    languageSettings.optIn("kotlin.RequiresOptIn")
+}
+
+val serializeVersion: String by rootProject.extra
+
 dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializeVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializeVersion")
     implementation("com.squareup.okhttp3:logging-interceptor:3.12.0")
 
     testImplementation("junit:junit:4.13.2")
