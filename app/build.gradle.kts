@@ -3,13 +3,16 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.5.31"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
     id("androidx.navigation.safeargs.kotlin")
 }
 
 val composeVersion: String by rootProject.extra
+val composeNavigationVersion: String by rootProject.extra
 val orbitVersion: String by rootProject.extra
 val hiltVersion: String by rootProject.extra
+val timberVersion: String by rootProject.extra
+val coroutinesVersion: String by rootProject.extra
 
 android {
     compileSdk = 32
@@ -49,16 +52,23 @@ android {
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+    implementation("androidx.navigation:navigation-compose:$composeNavigationVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
     implementation("androidx.activity:activity-compose:1.4.0")
     implementation("org.orbit-mvi:orbit-viewmodel:$orbitVersion")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+
+    implementation("com.jakewharton.timber:timber:$timberVersion")
+
+    implementation(project(mapOf("path" to ":newsrepository")))
+
     implementation("com.google.dagger:hilt-android:$hiltVersion")
+    implementation(project(mapOf("path" to ":newsapi")))
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     testImplementation("junit:junit:4.13.2")
@@ -73,4 +83,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+}
+
+kapt {
+    correctErrorTypes = true
 }
