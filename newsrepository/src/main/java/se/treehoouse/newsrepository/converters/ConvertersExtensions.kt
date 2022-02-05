@@ -8,6 +8,7 @@ import se.treehoouse.newsrepository.model.NewsFullSource
 import se.treehoouse.newsrepository.model.NewsSource
 
 fun NewsSourceTO.toModel() = NewsSource(id, name)
+fun List<NewsSourceTO>.toSourceModels() = map { it.toModel() }
 
 fun NewsFullSourceTO.toModel() = NewsFullSource(
     id = id,
@@ -18,6 +19,7 @@ fun NewsFullSourceTO.toModel() = NewsFullSource(
     language = language,
     country = country,
 )
+fun List<NewsSourceTO>.toFullSourceModels() = map { it.toModel() }
 
 fun NewsArticleTO.toModel() = NewsArticle(
     title = title,
@@ -29,3 +31,4 @@ fun NewsArticleTO.toModel() = NewsArticle(
     source = source.toModel(),
     content = content,
 )
+fun List<NewsArticleTO>.toArticleModels() = map { it.toModel() }

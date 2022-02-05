@@ -39,7 +39,7 @@ kotlin.sourceSets.all {
 val serializeVersion: String by rootProject.extra
 
 dependencies {
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    api("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializeVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializeVersion")

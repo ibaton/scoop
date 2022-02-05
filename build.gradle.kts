@@ -1,5 +1,6 @@
 buildscript {
-    val composeVersion by extra("1.0.5")
+    val composeVersion by extra("1.1.0-beta02")
+    val coroutinesVersion by extra("1.5.0")
     val kotlinVersion by extra("1.5.31")
     val serializeVersion by extra("1.3.2")
     val navVersion by extra("2.3.5")

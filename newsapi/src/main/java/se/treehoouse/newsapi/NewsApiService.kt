@@ -9,11 +9,11 @@ import retrofit2.http.Query
  */
 interface NewsApiService {
     @GET("sources")
-    fun listSources(@Query("apiKey") apiKey: String = NEWS_API_KEY): Response<Message.SourceMessageTO>
+    suspend fun listSources(@Query("apiKey") apiKey: String = NEWS_API_KEY): Message.SourceMessageTO
 
     @GET("everything")
-    fun everything(@Query("q") query: String, @Query("sources") sources: String? = null, @Query("apiKey") apiKey: String = NEWS_API_KEY): Response<Message.ArticleMessageTO>
+    suspend fun everything(@Query("q") query: String, @Query("sources") sources: String? = null, @Query("apiKey") apiKey: String = NEWS_API_KEY): Message.ArticleMessageTO
 
     @GET("top-headlines")
-    fun topHeadlines(@Query("sources") sources: String? = null, @Query("apiKey") apiKey: String = NEWS_API_KEY): Response<Message.ArticleMessageTO>
+    suspend fun topHeadlines(@Query("sources") sources: String? = null, @Query("apiKey") apiKey: String = NEWS_API_KEY): Message.ArticleMessageTO
 }
