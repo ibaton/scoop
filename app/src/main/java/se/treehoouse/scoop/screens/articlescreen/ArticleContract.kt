@@ -2,6 +2,7 @@ package se.treehoouse.scoop.screens.articlescreen
 
 import se.treehoouse.newsrepository.model.NewsArticle
 
+// TODO add error state
 data class ArticleState(
     val article: NewsArticle? = null
 )

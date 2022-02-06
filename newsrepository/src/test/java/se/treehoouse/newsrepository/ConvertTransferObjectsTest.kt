@@ -56,6 +56,7 @@ class ConvertTransferObjectsTest {
     @Test
     fun convertArticle_isCorrect() {
         val expectedArticle = NewsArticle(
+            id = "https://www.nytimes.com/2022/02/04/us/winter-storm-snow-ice-northeast.html".hashCode().toLong(),
             source = NewsSource(
                 id = null,
                 name = "Svd"
