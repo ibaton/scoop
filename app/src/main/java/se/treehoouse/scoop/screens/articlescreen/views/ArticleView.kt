@@ -21,40 +21,47 @@ fun ArticleView(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
     ) {
-        if(article.urlToImage != null) {
+        if (article.urlToImage != null) {
             Image(
                 modifier = Modifier
                     .height(200.dp)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(10.dp, 10.dp, 10.dp, 10.dp)),
+                    .fillMaxWidth(),
                 painter = rememberImagePainter(data = article.urlToImage,),
                 contentDescription = null,
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillWidth,
             )
         }
-        val source = article.source
-        if(source.name.isNotBlank()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            val source = article.source
+            if (source.name.isNotBlank()) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = source.name,
+                    style = MaterialTheme.typography.subtitle1,
+                )
+            }
+            Spacer(modifier = Modifier.height(6.dp))
+            val publishedAt = article.publishedAt
+            if (publishedAt != null) {
+                Text(
+                    text = publishedAt,
+                    style = MaterialTheme.typography.body2,
+                )
+            }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = source.name,
-                style = MaterialTheme.typography.subtitle1,
+                text = article.title,
+                style = MaterialTheme.typography.h5,
             )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = article.title,
-            style = MaterialTheme.typography.h5,
-        )
-        Spacer(modifier = Modifier.height(6.dp))
-        val publishedAt = article.publishedAt
-        if(publishedAt != null) {
-            // TODO convert date string to localized readable format
-            // TODO Make text color less distinct
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = publishedAt,
-                style = MaterialTheme.typography.body2,
+                text = article.content,
+                style = MaterialTheme.typography.body1,
             )
         }
     }

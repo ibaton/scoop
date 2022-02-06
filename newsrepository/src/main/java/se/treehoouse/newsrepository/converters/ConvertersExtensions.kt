@@ -22,6 +22,7 @@ fun NewsFullSourceTO.toModel() = NewsFullSource(
 fun List<NewsSourceTO>.toFullSourceModels() = map { it.toModel() }
 
 fun NewsArticleTO.toModel() = NewsArticle(
+    id = url.hashCode().toLong(),
     title = title,
     description = description,
     author = author,

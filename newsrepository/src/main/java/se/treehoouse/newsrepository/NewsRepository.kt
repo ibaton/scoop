@@ -3,15 +3,14 @@ package se.treehoouse.newsrepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import se.treehoouse.newsapi.model.Message
 import se.treehoouse.newsapi.NewsApiService
-import se.treehoouse.newsrepository.converters.toArticleModels
-import se.treehoouse.newsrepository.converters.toArticlesDb
-import se.treehoouse.newsrepository.converters.toFailure
-import se.treehoouse.newsrepository.converters.toSuccess
+import se.treehoouse.newsrepository.converters.*
 import se.treehoouse.newsrepository.model.NewsArticle
 import se.treehoouse.newsrepository.model.Result
 import se.treehoouse.newsstorage.NewsDatabase
+import se.treehoouse.newsstorage.model.NewsArticleDB
 import java.lang.Exception
 
 class NewsRepository(
@@ -52,5 +51,9 @@ class NewsRepository(
 
     private fun Array<Result<List<NewsArticle>>>.combine(): Result<List<NewsArticle>> {
         return first()
+    }
+
+    fun loadArticle(id: Long): Flow<NewsArticle> {
+        return db.newsDao().loadNewsArticle(id).map { it.toModel() }
     }
 }

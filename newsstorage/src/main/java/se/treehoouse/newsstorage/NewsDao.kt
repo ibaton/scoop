@@ -9,6 +9,9 @@ interface NewsDao {
     @get:Query("SELECT * FROM article")
     val all: Flow<List<NewsArticleDB>>
 
+    @Query("SELECT * FROM article WHERE id=:id")
+    fun loadNewsArticle(id: Long): Flow<NewsArticleDB>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(articles: List<NewsArticleDB>)
 

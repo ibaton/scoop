@@ -61,6 +61,6 @@ private fun handleSideEffect(
 ) {
     when (sideEffect) {
         is ArticleListSideEffect.ToastEffect -> toast(context, sideEffect.text)
-        is ArticleListSideEffect.NavigateToArticle -> navController.navigate("article/articleId")
+        is ArticleListSideEffect.NavigateToArticle -> navController.navigate("article/${sideEffect.article.id}")
     }
 }

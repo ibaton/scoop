@@ -11,5 +11,5 @@ sealed class ArticleSideEffect {
 }
 
 sealed class ArticleAction {
-    object LoadPage : ArticleAction()
+    data class LoadPage(val id: Long) : ArticleAction()
 }

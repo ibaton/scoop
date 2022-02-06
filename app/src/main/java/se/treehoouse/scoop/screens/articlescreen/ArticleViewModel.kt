@@ -2,7 +2,10 @@ package se.treehoouse.scoop.screens.articlescreen
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import se.treehoouse.newsrepository.NewsRepository
 import se.treehoouse.scoop.mvi.MviViewModel
@@ -20,13 +23,20 @@ class ArticleViewModel @Inject constructor(
     override fun onAction(action: ArticleAction) {
         when (action) {
             is ArticleAction.LoadPage -> {
-                loadPage()
+                loadPage(action.id)
             }
         }
     }
 
-    private fun loadPage() = viewModelScope.launch {
-
+    private fun loadPage(id: Long) = viewModelScope.launch {
+        newsRepository.loadArticle(id)
+            .collect{
+                intent {
+                    reduce {
+                        state.copy(article = it)
+                    }
+                }
+            }
     }
 
     companion object {

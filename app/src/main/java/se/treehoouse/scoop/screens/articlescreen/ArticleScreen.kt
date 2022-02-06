@@ -14,10 +14,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
+import se.treehoouse.scoop.screens.articlescreen.views.ArticleView
 
 @Composable
 fun ArticleScreen(
-    navController: NavController,
+    articleId: Long,
     viewModel: ArticleViewModel = hiltViewModel(),
 ) {
     val state: ArticleState = viewModel.container.stateFlow
@@ -25,7 +26,7 @@ fun ArticleScreen(
 
     val context = LocalContext.current
     LaunchedEffect(viewModel) {
-        viewModel.postAction(ArticleAction.LoadPage)
+        viewModel.postAction(ArticleAction.LoadPage(articleId))
         launch {
             viewModel.container.sideEffectFlow
                 .collect { handleSideEffect(context, it) }
@@ -37,7 +38,9 @@ fun ArticleScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-
+        if(state.article != null) {
+            ArticleView(state.article)
+        }
     }
 }
 
