@@ -8,6 +8,7 @@ buildscript {
     val orbitVersion by extra("4.3.1")
     val hiltVersion by extra("2.38.1")
     val timberVersion by extra("5.0.1")
+    val roomVersion by extra("2.4.1")
 
     repositories {
         google()

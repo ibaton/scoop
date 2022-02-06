@@ -77,6 +77,7 @@ dependencies {
     implementation(project(mapOf("path" to ":newsrepository")))
 
     implementation("com.google.dagger:hilt-android:$hiltVersion")
+    implementation(project(mapOf("path" to ":newsstorage")))
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     testImplementation("junit:junit:4.13.2")

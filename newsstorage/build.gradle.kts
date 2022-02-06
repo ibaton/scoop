@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt")
 }
 
 android {
@@ -32,14 +33,10 @@ android {
     }
 }
 
-val coroutinesVersion: String by rootProject.extra
-val kotlinVersion: String by rootProject.extra
+val roomVersion: String by rootProject.extra
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
-    implementation(project(mapOf("path" to ":newsapi")))
-    implementation(project(mapOf("path" to ":newsstorage")))
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    api("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    api("androidx.room:room-ktx:$roomVersion")
 }
