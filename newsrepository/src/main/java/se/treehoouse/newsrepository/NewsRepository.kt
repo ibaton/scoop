@@ -1,22 +1,21 @@
 package se.treehoouse.newsrepository
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import se.treehoouse.newsapi.model.Message
 import se.treehoouse.newsapi.NewsApiService
 import se.treehoouse.newsrepository.converters.*
+import se.treehoouse.newsrepository.model.ErrorResult
 import se.treehoouse.newsrepository.model.NewsArticle
 import se.treehoouse.newsrepository.model.Result
 import se.treehoouse.newsstorage.NewsDatabase
-import se.treehoouse.newsstorage.model.NewsArticleDB
 import java.lang.Exception
 
 class NewsRepository(
     private val api: NewsApiService,
     private val db: NewsDatabase
 ) {
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun loadTopics(topics: List<String>): Flow<Result<List<NewsArticle>>> {
         val filteredTopics = topics.filter { it.isNotBlank() }
 
@@ -25,11 +24,19 @@ class NewsRepository(
         ) { results ->
             val allResults = results.combine()
             if(allResults is Result.Data){
+                // TODO Save result to database async. Requires update loadArticle to be able to handle not saved articles
                 db.newsDao().updateAll(
                     allResults.value.toArticlesDb()
                 )
             }
             allResults
+        }.flatMapLatest { result ->
+            when(result) {
+                is Result.Data -> flowOf(result)
+                is Result.Error -> flowOf(result)
+                is Result.NoNetworkError -> db.newsDao().all.map { it.toArticles().toSuccess() }
+                is Result.ParsingError -> flowOf(result)
+            }
         }
     }
 
@@ -50,7 +57,8 @@ class NewsRepository(
     }
 
     private fun Array<Result<List<NewsArticle>>>.combine(): Result<List<NewsArticle>> {
-        return first()
+        return find { it is ErrorResult } ?: filterIsInstance<List<NewsArticle>>().flatten()
+            .toSuccess()
     }
 
     fun loadArticle(id: Long): Flow<NewsArticle> {

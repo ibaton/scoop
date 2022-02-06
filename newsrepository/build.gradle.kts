@@ -32,6 +32,10 @@ android {
     }
 }
 
+kotlin.sourceSets.all {
+    languageSettings.optIn("kotlin.RequiresOptIn")
+}
+
 val coroutinesVersion: String by rootProject.extra
 val kotlinVersion: String by rootProject.extra
 
