@@ -41,7 +41,6 @@ class NewsRepository(
             }
             allResults
         }.flatMapLatest { result ->
-            // TODO Only return items for provided topics if NoNetworkError
             // TODO Sort database items base on publish date
             when (result) {
                 is Result.Data -> flowOf(result)
