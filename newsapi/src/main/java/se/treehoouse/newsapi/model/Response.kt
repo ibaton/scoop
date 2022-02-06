@@ -2,9 +2,6 @@ package se.treehoouse.newsapi.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import se.treehoouse.newsapi.model.NewsArticleTO
-import se.treehoouse.newsapi.model.NewsFullSourceTO
-import se.treehoouse.newsapi.model.NewsSourceTO
 
 /**
  * Messages that maps to the messages received from news api
