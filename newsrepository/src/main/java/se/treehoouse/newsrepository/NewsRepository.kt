@@ -11,10 +11,19 @@ import se.treehoouse.newsrepository.model.Result
 import se.treehoouse.newsstorage.NewsDatabase
 import java.lang.Exception
 
+/**
+ * Repository responsible for fetching and storing news articles
+ */
 class NewsRepository(
     private val api: NewsApiService,
     private val db: NewsDatabase
 ) {
+
+    /**
+     * Load provided topics from remote api.
+     * Store requested data on device using [NewsDatabase].
+     * If device doesn't have a connection return all saved items in database.
+     */
     @OptIn(ExperimentalCoroutinesApi::class)
     fun loadTopics(topics: List<String>): Flow<Result<List<NewsArticle>>> {
         val filteredTopics = topics.filter { it.isNotBlank() }
@@ -31,6 +40,8 @@ class NewsRepository(
             }
             allResults
         }.flatMapLatest { result ->
+            // TODO Only return items for provided topics if NoNetworkError
+            // TODO Sort database items base on publish date
             when(result) {
                 is Result.Data -> flowOf(result)
                 is Result.Error -> flowOf(result)
@@ -56,12 +67,21 @@ class NewsRepository(
         }
     }
 
+    /**
+     * Combine multiple results into single result.
+     *
+     * @return a combined list with all data on success, error if any result was a failure
+     */
     private fun Array<Result<List<NewsArticle>>>.combine(): Result<List<NewsArticle>> {
         return find { it is ErrorResult } ?: filterIsInstance<List<NewsArticle>>().flatten()
             .toSuccess()
     }
 
+    /**
+     * Load data for single article.
+     */
     fun loadArticle(id: Long): Flow<NewsArticle> {
+        // TODO Add error handling
         return db.newsDao().loadNewsArticle(id).map { it.toModel() }
     }
 }
