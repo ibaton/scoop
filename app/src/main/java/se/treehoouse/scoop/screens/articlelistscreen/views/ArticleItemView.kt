@@ -1,8 +1,8 @@
-package se.treehoouse.scoop.screens.articlelist.views
+package se.treehoouse.scoop.screens.articlelistscreen.views
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -12,15 +12,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import coil.transform.CircleCropTransformation
 import se.treehoouse.newsrepository.model.NewsArticle
 
 @Composable
-fun ArticleItemView(article: NewsArticle) {
+fun ArticleItemView(
+    article: NewsArticle,
+    onClick: (NewsArticle)->Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .clickable { onClick(article) }
+            .padding(16.dp),
     ) {
         if(article.urlToImage != null) {
             Image(
