@@ -1,14 +1,13 @@
 package se.treehoouse.scoop.screens.articlelist
 
-import se.treehoouse.newsrepository.model.NewsSource
+import se.treehoouse.newsrepository.model.NewsArticle
 
 data class ArticleListState(
-    val articles: List<NewsSource> = emptyList()
+    val articles: List<NewsArticle> = emptyList()
 )
 
 sealed class ArticleListSideEffect {
     data class ToastEffect(val text: String) : ArticleListSideEffect()
-    object FinishEffect : ArticleListSideEffect()
 }
 
 sealed class ArticleListAction {

@@ -30,7 +30,7 @@ fun createNewsApiService(): NewsApiService{
         .build()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://newsapi.org/v2/")
+        .baseUrl("https://newsapi.org/v2/")
         .client(client)
         .addConverterFactory(json.asConverterFactory(contentType))
         .build()

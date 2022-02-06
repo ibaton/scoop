@@ -1,8 +1,8 @@
 package se.treehoouse.newsapi
 
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
+import se.treehoouse.newsapi.model.Message
 
 /**
  * Retrofit api specification for NewsApi

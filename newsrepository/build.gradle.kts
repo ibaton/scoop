@@ -33,9 +33,11 @@ android {
 }
 
 val coroutinesVersion: String by rootProject.extra
+val kotlinVersion: String by rootProject.extra
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     implementation(project(mapOf("path" to ":newsapi")))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

@@ -9,4 +9,5 @@ sealed interface Result<T> {
     ): Result<T>
 
     data class Error<T>(val exception: Exception): Result<T>
+    data class ParsingError<T>(val exception: Exception): Result<T>
 }

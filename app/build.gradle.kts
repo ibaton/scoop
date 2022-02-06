@@ -13,6 +13,8 @@ val orbitVersion: String by rootProject.extra
 val hiltVersion: String by rootProject.extra
 val timberVersion: String by rootProject.extra
 val coroutinesVersion: String by rootProject.extra
+val kotlinVersion: String by rootProject.extra
+val navVersion: String by rootProject.extra
 
 android {
     compileSdk = 32
@@ -52,13 +54,20 @@ android {
 }
 
 dependencies {
+    implementation(project(mapOf("path" to ":newsapi")))
+
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
-    implementation("androidx.navigation:navigation-compose:$composeNavigationVersion")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    implementation("io.coil-kt:coil-compose:1.4.0")
     implementation("androidx.activity:activity-compose:1.4.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    implementation("androidx.navigation:navigation-compose:$navVersion")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
     implementation("org.orbit-mvi:orbit-viewmodel:$orbitVersion")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
@@ -68,7 +77,6 @@ dependencies {
     implementation(project(mapOf("path" to ":newsrepository")))
 
     implementation("com.google.dagger:hilt-android:$hiltVersion")
-    implementation(project(mapOf("path" to ":newsapi")))
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
     testImplementation("junit:junit:4.13.2")
