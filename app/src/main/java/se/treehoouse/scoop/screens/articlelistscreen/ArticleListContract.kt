@@ -3,9 +3,14 @@ package se.treehoouse.scoop.screens.articlelistscreen
 import se.treehoouse.newsrepository.model.NewsArticle
 
 // TODO Add error state
-data class ArticleListState(
-    val articles: List<NewsArticle> = emptyList()
-)
+sealed class ArticleListState {
+    data class DataState(
+        val articles: List<NewsArticle> = emptyList()
+    ) : ArticleListState()
+
+    object ErrorState : ArticleListState()
+    object LoadingState : ArticleListState()
+}
 
 sealed class ArticleListSideEffect {
     data class ToastEffect(val text: String) : ArticleListSideEffect()

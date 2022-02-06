@@ -19,7 +19,7 @@ class ArticleListViewModel @Inject constructor(
 ) : MviViewModel<ArticleListState, ArticleListSideEffect, ArticleListAction>(TAG) {
 
     override val container = container<ArticleListState, ArticleListSideEffect>(
-        ArticleListState(),
+        ArticleListState.LoadingState,
     )
 
     override fun onAction(action: ArticleListAction) {
@@ -38,12 +38,14 @@ class ArticleListViewModel @Inject constructor(
     private fun loadPage() = viewModelScope.launch {
         newsRepository.loadTopics(listOf("Apple", "Google", "Facebook"))
             .collect { result ->
-                if (result is Result.Data<List<NewsArticle>>) {
-                    intent {
-                        reduce {
-                            state.copy(
+                intent {
+                    reduce {
+                        if (result is Result.Data<List<NewsArticle>>) {
+                            ArticleListState.DataState(
                                 articles = result.value
                             )
+                        } else {
+                            ArticleListState.ErrorState
                         }
                     }
                 }
