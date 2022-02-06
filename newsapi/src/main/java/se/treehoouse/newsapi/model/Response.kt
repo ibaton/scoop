@@ -8,12 +8,6 @@ import kotlinx.serialization.Serializable
  */
 object Message {
     @Serializable
-    data class SourceMessageTO(
-        @SerialName("status") val status: String,
-        @SerialName("sources") val sources: List<NewsSourceTO> = listOf()
-    )
-
-    @Serializable
     data class ArticleMessageTO(
         @SerialName("status") val status: String,
         @SerialName("totalResults") val totalResults: Int,

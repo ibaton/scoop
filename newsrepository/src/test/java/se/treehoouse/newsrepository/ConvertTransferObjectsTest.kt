@@ -4,11 +4,9 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import se.treehoouse.newsapi.model.NewsArticleTO
-import se.treehoouse.newsapi.model.NewsFullSourceTO
 import se.treehoouse.newsapi.model.NewsSourceTO
 import se.treehoouse.newsrepository.converters.toModel
 import se.treehoouse.newsrepository.model.NewsArticle
-import se.treehoouse.newsrepository.model.NewsFullSource
 import se.treehoouse.newsrepository.model.NewsSource
 
 class ConvertTransferObjectsTest {

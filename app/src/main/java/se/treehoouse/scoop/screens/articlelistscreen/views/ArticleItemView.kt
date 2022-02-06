@@ -31,7 +31,7 @@ fun ArticleItemView(
                     .height(200.dp)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp, 10.dp, 10.dp, 10.dp)),
-                painter = rememberImagePainter(data = article.urlToImage,),
+                painter = rememberImagePainter(data = article.urlToImage),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
             )
