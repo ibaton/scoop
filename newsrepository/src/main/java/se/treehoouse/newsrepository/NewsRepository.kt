@@ -26,13 +26,14 @@ class NewsRepository(
      */
     @OptIn(ExperimentalCoroutinesApi::class)
     fun loadTopics(topics: List<String>): Flow<Result<List<NewsArticle>>> {
+        // TODO add pagination
         val filteredTopics = topics.filter { it.isNotBlank() }
 
         return combine(
             filteredTopics.map { loadRemoteTopic(it) }
         ) { results ->
             val allResults = results.combine()
-            if(allResults is Result.Data){
+            if (allResults is Result.Data) {
                 // TODO Save result to database async. Requires update loadArticle to be able to handle not saved articles
                 db.newsDao().updateAll(
                     allResults.value.toArticlesDb()
@@ -42,7 +43,7 @@ class NewsRepository(
         }.flatMapLatest { result ->
             // TODO Only return items for provided topics if NoNetworkError
             // TODO Sort database items base on publish date
-            when(result) {
+            when (result) {
                 is Result.Data -> flowOf(result)
                 is Result.Error -> flowOf(result)
                 is Result.NoNetworkError -> db.newsDao().all.map { it.toArticles().toSuccess() }
@@ -61,7 +62,7 @@ class NewsRepository(
                     .toSuccess()
 
                 emit(data)
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 emit(e.toFailure())
             }
         }
@@ -73,8 +74,11 @@ class NewsRepository(
      * @return a combined list with all data on success, error if any result was a failure
      */
     private fun Array<Result<List<NewsArticle>>>.combine(): Result<List<NewsArticle>> {
-        return find { it is ErrorResult } ?: filterIsInstance<List<NewsArticle>>().flatten()
-            .toSuccess()
+        return find { it is ErrorResult }
+            ?: filterIsInstance<Result.Data<List<NewsArticle>>>()
+                .map { it.value }
+                .flatten()
+                .toSuccess()
     }
 
     /**

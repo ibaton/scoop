@@ -23,14 +23,11 @@ fun createNewsApiService(): NewsApiService{
     val contentType = MediaType.get("*/*")
 
     val client = OkHttpClient.Builder()
-        .connectTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(120, TimeUnit.SECONDS)
         .addDebugLogging()
         .build()
 
     val retrofit = Retrofit.Builder()
-        .baseUrl("https://newsapi.org/v2/")
+        .baseUrl(NEWS_API_URL)
         .client(client)
         .addConverterFactory(json.asConverterFactory(contentType))
         .build()
